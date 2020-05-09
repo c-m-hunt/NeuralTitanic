@@ -41,24 +41,28 @@ function prepTitanicRow(row){
     }
 
     // Process Quantitative Variables
-    if(parseFloat(age) == NaN){
+    if(isNaN(parseFloat(age))){
         age = 0;
     }
-    if(parseFloat(sibsp) == NaN){
+    if(isNaN(parseFloat(sibsp))){
         sibsp = 0;
     }
-    if(parseFloat(parch) == NaN){
+    if(isNaN(parseFloat(parch))){
         parch = 0;
     }
-    if(parseFloat(fare) == NaN){
+    if(isNaN(parseFloat(fare))){
         fare = 0;
     }
-    
+
+    age = parseFloat(age)
+    sibsp = parseInt(sibsp)
+    parch = parseInt(parch)
+    fare = parseFloat(fare)
     return pclass.concat(sex).concat([age,sibsp,parch,fare]).concat(embarked);
 }
 
 export function titanicPreprocess(data){
     const X = _.map(_.map(data,(x)=>x.d),prepTitanicRow);
-    const y = _.map(data,(x)=>x.d["survived"]);
+    const y = _.map(data,(x)=>parseInt(x.d["survived"]));
     return [X,y];
 }

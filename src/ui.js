@@ -86,7 +86,6 @@ export async function plotLoss(lossData,accuracy){
         .attr("d", line);
     
     lossText.text("Loss: "+lossData[lossData.length-1].toFixed(3)+" | Accuracy: "+(accuracy*100).toFixed(2)+"%");
-
 }
 
 export function makeTable(data){

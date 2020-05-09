@@ -36,12 +36,11 @@ export async function trainModel(data,trainState){
     var lastBatchLoss = null;
 
     // Get Hyperparameter Settings
-    const epochs    = d3.select("#epochs").property("value");
-    const batchSize = d3.select("#batchSize").property("value")
+    const epochs    = parseInt(d3.select("#epochs").property("value"));
+    const batchSize = parseInt(d3.select("#batchSize").property("value"))
     
     // Init training curve plotting. 
     initPlot();
-
     for(let epoch = 0; epoch < epochs && trainState.s; epoch++ ){
         try{
             var i = 0;
@@ -53,9 +52,8 @@ export async function trainModel(data,trainState){
                     return [xs,ys];
                 });
 
-                const history = await model.fit(xs, ys, {batchSize: batchSize, epochs: 1});
+                const history = await model.fit(xs, ys, {batchSize, epochs: 1});
                 lastBatchLoss = history.history.loss[0];
-
                 tf.dispose([xs, ys]);
                 await tf.nextFrame();
                 i++;
@@ -81,5 +79,4 @@ export async function trainModel(data,trainState){
     // Enable Form Controls
     d3.select("#modelParameters").selectAll(".form-control").attr('disabled', null);
     d3.select("#tableControls").selectAll(".form-control").attr('disabled', null);
-
 }
